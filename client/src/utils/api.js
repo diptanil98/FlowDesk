@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://flowdesk-production-e1f4.up.railway.app/api',
+  baseURL: 'https://flowdesk-production-e1f4.up.railway.app/api',
 });
 
 
