@@ -24,7 +24,7 @@
 - JWT-based login & registration
 - Secure password hashing with bcrypt
 - Auto logout on token expiry
-- Role-based access control (Admin / Member)
+- Protected routes with role-based access
 
 ### 👥 Role-Based Access Control
 
@@ -46,7 +46,7 @@
 
 ### ✅ Task Management
 - Create tasks with title, description, priority, due date
-- Assign tasks to team members
+- Assign tasks to specific team members
 - Filter tasks by status and priority
 - Search tasks by keyword
 
@@ -59,7 +59,7 @@
 ### 📊 Dashboard
 - Stats: Total Projects, Tasks, Completed, Pending
 - Productivity bar chart (Last 7 Days)
-- Recent tasks feed
+- Recent tasks feed with status
 
 ### 🛠️ Admin Panel
 - User management table
@@ -77,15 +77,15 @@
 | Tailwind CSS | Styling |
 | React Router v6 | Navigation |
 | Axios | HTTP Client |
-| Recharts | Charts |
+| Recharts | Charts & Analytics |
 | React Hot Toast | Notifications |
 
 ### Backend
 | Tool | Purpose |
 |------|---------|
-| Node.js + Express | Server |
-| MongoDB + Mongoose | Database |
-| JWT | Authentication |
+| Node.js + Express | Server Framework |
+| MongoDB + Mongoose | Database & ODM |
+| JWT | Authentication Tokens |
 | bcryptjs | Password Hashing |
 | CORS | Cross-Origin Requests |
 
@@ -101,43 +101,55 @@
 
 ```
 FlowDesk/
-├── client/                      # React Frontend
+├── client/                        # React Frontend
 │   ├── public/
-│   ├── src/
-│   │   ├── assets/              # Static assets
-│   │   ├── components/          # Reusable UI components
-│   │   ├── context/             # Auth context
-│   │   ├── layouts/             # Layout components
-│   │   ├── pages/               # Route pages
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── Projects.jsx
-│   │   │   ├── ProjectBoard.jsx
-│   │   │   ├── Tasks.jsx
-│   │   │   ├── Admin.jsx
-│   │   │   ├── Login.jsx
-│   │   │   └── Register.jsx
-│   │   ├── services/            # API service layer
-│   │   ├── utils/               # Axios instance & helpers
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── tailwind.config.js
-│   ├── vite.config.js
-│   └── package.json
+│   └── src/
+│       ├── assets/                # Static assets
+│       ├── components/            # Reusable UI components
+│       │   ├── EmptyState.jsx
+│       │   ├── LoadingSpinner.jsx
+│       │   ├── Modal.jsx
+│       │   ├── ProtectedRoute.jsx
+│       │   └── StatusBadge.jsx
+│       ├── context/
+│       │   └── AuthContext.jsx    # Auth state management
+│       ├── layouts/
+│       │   └── Layout.jsx         # Sidebar + Topbar layout
+│       ├── pages/
+│       │   ├── Admin.jsx
+│       │   ├── Dashboard.jsx
+│       │   ├── Login.jsx
+│       │   ├── ProjectBoard.jsx   # Kanban board
+│       │   ├── Projects.jsx
+│       │   ├── Register.jsx
+│       │   └── Tasks.jsx
+│       ├── utils/
+│       │   └── api.js             # Axios instance + interceptors
+│       ├── App.jsx
+│       └── main.jsx
 │
-└── server/                      # Node.js Backend
-    ├── config/                  # DB config
-    ├── controllers/             # Route logic
-    ├── middleware/              # Auth & role middleware
-    ├── models/                  # Mongoose models
-    │   ├── User.js
+└── server/                        # Node.js Backend
+    ├── controllers/
+    │   ├── adminController.js
+    │   ├── authController.js
+    │   ├── dashboardController.js
+    │   ├── projectBoardController.js
+    │   ├── projectController.js
+    │   └── taskController.js
+    ├── middleware/
+    │   ├── auth.js                # JWT verification
+    │   └── authorize.js           # Role-based access
+    ├── models/
     │   ├── Project.js
-    │   └── Task.js
-    ├── routes/                  # API routes
+    │   ├── Task.js
+    │   └── User.js
+    ├── routes/
+    │   ├── admin.js
     │   ├── auth.js
-    │   ├── projects.js
-    │   ├── tasks.js
     │   ├── dashboard.js
-    │   └── admin.js
+    │   ├── projects.js
+    │   └── tasks.js
+    ├── .env
     ├── index.js
     └── package.json
 ```
@@ -228,13 +240,13 @@ http://localhost:5173
 |--------|----------|-------------|--------|
 | GET | `/api/tasks` | Get all tasks | Auth |
 | POST | `/api/tasks` | Create task | Admin |
-| PUT | `/api/tasks/:id` | Update task | Auth |
+| PUT | `/api/tasks/:id` | Update task status | Auth |
 | DELETE | `/api/tasks/:id` | Delete task | Admin |
 
 ### Dashboard
 | Method | Endpoint | Description | Access |
 |--------|----------|-------------|--------|
-| GET | `/api/dashboard` | Get stats & activity | Auth |
+| GET | `/api/dashboard` | Get stats & recent tasks | Auth |
 
 ### Admin
 | Method | Endpoint | Description | Access |
@@ -250,17 +262,17 @@ http://localhost:5173
 
 ### Backend (Railway)
 1. Push code to GitHub
-2. Connect repo to Railway
+2. Connect repo to Railway → New Service
 3. Set root directory → `server`
-4. Add environment variables
+4. Add environment variables (MONGO_URI, JWT_SECRET)
 5. Deploy ✅
 
 ### Frontend (Railway)
-1. Connect same repo to Railway (new service)
+1. Connect same repo → New Service
 2. Set root directory → `client`
-3. Set build command → `npm run build`
-4. Set output directory → `dist`
-5. Add `VITE_API_URL` environment variable
+3. Build command → `npm run build`
+4. Output directory → `dist`
+5. Add `VITE_API_URL` → your backend Railway URL + `/api`
 6. Deploy ✅
 
 ---
