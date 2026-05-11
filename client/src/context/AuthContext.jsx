@@ -15,13 +15,11 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check if user is logged in on app start
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // Verify token and get user info
-      // For simplicity, we'll assume the token is valid
-      // In a real app, you'd verify with the server
+      
       const userData = JSON.parse(localStorage.getItem('user'));
       if (userData) {
         setUser(userData);
