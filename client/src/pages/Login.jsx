@@ -111,7 +111,7 @@ const Login = () => {
               <div className="w-full border-t border-gray-200"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-3 bg-white text-gray-400 text-xs">New to TaskFlow?</span>
+              <span className="px-3 bg-white text-gray-400 text-xs">New to FlowDesk?</span>
             </div>
           </div>
 
