@@ -45,18 +45,18 @@ const Layout = ({ children }) => {
       )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-sidebar border-r border-border transform transition-transform duration-150 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
+      <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-gradient-to-b from-slate-50 to-slate-100 border-r border-slate-200 transform transition-transform duration-150 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
         <div className="flex flex-col h-full">
           {/* Logo Section */}
-          <div className="h-16 flex items-center justify-center px-6 border-b border-border">
+          <div className="h-16 flex items-center justify-center px-6 border-b border-slate-200 bg-gradient-to-r from-blue-600 to-indigo-700">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary rounded-lg">
+              <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
               <div>
-                <p className="text-lg font-semibold text-text">FlowDesk</p>
+                <p className="text-lg font-semibold text-white">FlowDesk</p>
               </div>
             </div>
           </div>
@@ -68,13 +68,13 @@ const Layout = ({ children }) => {
                 key={item.name}
                 to={item.href}
                 onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors duration-150 group relative ${
+                className={`flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-all duration-200 group relative ${
                   isActive(item.href)
-                    ? 'text-primary-600 bg-gray-50 border-l-4 border-primary-600'
-                    : 'text-text-subtle hover:text-text hover:bg-gray-50'
+                    ? 'text-white bg-gradient-to-r from-blue-600 to-indigo-700 shadow-md border-l-4 border-blue-400'
+                    : 'text-slate-700 hover:text-blue-700 hover:bg-blue-50 hover:shadow-sm'
                 }`}
               >
-                <svg className={`w-5 h-5 ${isActive(item.href) ? 'text-primary-600' : 'text-text-subtle group-hover:text-text'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-5 h-5 transition-colors duration-200 ${isActive(item.href) ? 'text-white' : 'text-slate-500 group-hover:text-blue-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
                 </svg>
                 <span>{item.name}</span>
@@ -83,14 +83,14 @@ const Layout = ({ children }) => {
           </nav>
 
           {/* User Section */}
-          <div className="p-4 border-t border-border">
+          <div className="p-4 border-t border-slate-200 bg-slate-50/50">
             <div className="flex items-center gap-3 mb-3">
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-white font-medium text-sm">
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium text-sm shadow-sm">
                 {user?.name?.charAt(0).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-text truncate">{user?.name}</p>
-                <p className="text-xs text-text-subtle capitalize">{user?.role}</p>
+                <p className="text-sm font-medium text-slate-800 truncate">{user?.name}</p>
+                <p className="text-xs text-slate-500 capitalize">{user?.role}</p>
               </div>
             </div>
             <button
@@ -98,7 +98,7 @@ const Layout = ({ children }) => {
                 handleLogout();
                 setSidebarOpen(false);
               }}
-              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-text-subtle transition-colors duration-150 font-medium text-sm"
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-slate-600 transition-all duration-200 font-medium text-sm hover:text-red-600 hover:bg-red-50 hover:shadow-sm"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -111,11 +111,11 @@ const Layout = ({ children }) => {
 
       {/* Topbar */}
       <div className="md:ml-64">
-        <div className="h-16 bg-white border-b border-border flex items-center justify-between px-6">
+        <div className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shadow-sm">
           {/* Mobile Hamburger */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="md:hidden p-2 rounded-lg text-text-subtle transition-colors duration-150"
+            className="md:hidden p-2 rounded-lg text-slate-600 transition-colors duration-200 hover:bg-slate-100"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={sidebarOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
@@ -123,14 +123,14 @@ const Layout = ({ children }) => {
           </button>
 
           {/* Page Title */}
-          <h1 className="text-xl font-semibold text-text">{getPageTitle()}</h1>
+          <h1 className="text-xl font-semibold text-slate-800">{getPageTitle()}</h1>
 
           {/* User Avatar */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-white font-medium text-sm">
+            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium text-sm shadow-sm">
               {user?.name?.charAt(0).toUpperCase()}
             </div>
-            <span className="text-sm font-medium text-text hidden sm:block">{user?.name}</span>
+            <span className="text-sm font-medium text-slate-700 hidden sm:block">{user?.name}</span>
           </div>
         </div>
 
