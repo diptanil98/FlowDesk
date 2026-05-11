@@ -218,46 +218,6 @@ http://localhost:5173
 
 ---
 
-## 📡 API Endpoints
-
-### Auth
-| Method | Endpoint | Description | Access |
-|--------|----------|-------------|--------|
-| POST | `/api/auth/register` | Register new user | Public |
-| POST | `/api/auth/login` | Login user | Public |
-
-### Projects
-| Method | Endpoint | Description | Access |
-|--------|----------|-------------|--------|
-| GET | `/api/projects` | Get all projects | Auth |
-| POST | `/api/projects` | Create project | Admin |
-| PUT | `/api/projects/:id` | Update project | Admin |
-| DELETE | `/api/projects/:id` | Delete project | Admin |
-| GET | `/api/projects/:id/board` | Get kanban board | Auth |
-
-### Tasks
-| Method | Endpoint | Description | Access |
-|--------|----------|-------------|--------|
-| GET | `/api/tasks` | Get all tasks | Auth |
-| POST | `/api/tasks` | Create task | Admin |
-| PUT | `/api/tasks/:id` | Update task status | Auth |
-| DELETE | `/api/tasks/:id` | Delete task | Admin |
-
-### Dashboard
-| Method | Endpoint | Description | Access |
-|--------|----------|-------------|--------|
-| GET | `/api/dashboard` | Get stats & recent tasks | Auth |
-
-### Admin
-| Method | Endpoint | Description | Access |
-|--------|----------|-------------|--------|
-| GET | `/api/admin/users` | Get all users | Admin |
-| PUT | `/api/admin/users/:id/role` | Update user role | Admin |
-| POST | `/api/admin/projects/:id/members` | Add member | Admin |
-| DELETE | `/api/admin/projects/:id/members/:userId` | Remove member | Admin |
-
----
-
 ## 🌍 Deployment
 
 ### Backend (Railway)
